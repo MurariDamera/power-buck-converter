@@ -1,0 +1,13 @@
+Reference,Value,Footprint
+U1,LM2596T-5,Package_TO_SOT_THT:TO-220-5_P3.4x3.7mm_StaggerOdd_Lead3.8mm_Vertical
+J1,12V INPUT,"TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal"
+C1,680uF / 35V,Capacitor_THT:CP_Radial_D10.0mm_P5.00mm
+C2,100nF / 50V,Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm
+D1,1N5822,Diode_THT:D_DO-201AD_P15.24mm_Horizontal
+L1,33uH / Isat >= 3.5A,Inductor_THT:L_Radial_D12.5mm_P7.00mm_Fastron_09HCP
+C3,220uF / 25V,Capacitor_THT:CP_Radial_D8.0mm_P3.50mm
+J2,5V OUTPUT,"TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal"
+H1,M3 mounting hole,MountingHole:MountingHole_3.2mm_M3
+H2,M3 mounting hole,MountingHole:MountingHole_3.2mm_M3
+H3,M3 mounting hole,MountingHole:MountingHole_3.2mm_M3
+H4,M3 mounting hole,MountingHole:MountingHole_3.2mm_M3
