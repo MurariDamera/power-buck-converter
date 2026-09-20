@@ -52,8 +52,6 @@ J1 pin 1 is input positive; J2 pin 1 is output positive; both pin 2 terminals ar
 - `Buck_Converter.kicad_pcb` — placed, routed board with filled ground zones.
 - `BOM.csv` — component values and assigned footprints.
 - `sym-lib-table`, `fp-lib-table` — library tables (reference standard KiCad 10 libraries).
-- `build_design.py` — the generator that produced the project, schematic, and board. **Running it overwrites those files, including any manual edits.** Normal editing should be done in KiCad directly.
-- `verify_connectivity.py` — checks an exported netlist against the four expected nets above. Requires a `reports/netlist.xml` exported from KiCad.
 - `fabrication/` — Gerbers, drill files, and drill maps exported from the board above, ready to send to a fab house.
 - `ltspice/` — LTspice validation of the power stage. `Buck_Converter_LTspice.asc` is the schematic (open it and hit Run); `LM2596_5P0_TRANS.lib` is TI's official LM2596-5.0 transient model, ported from PSpice syntax; `LM2596_5P0_TRANS.asy` is the matching symbol; `Buck_Converter_LTspice.plt` restores the plot panes. All four files must stay together in the same folder.
  
