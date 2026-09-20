@@ -32,7 +32,7 @@ Power tracks are 1.25–1.5 mm with a short 0.9 mm switch-pin escape. Both coppe
 | L1 | 33 µH, Isat ≥ 3.5 A | L_Radial D12.5 mm P7 mm |
 | H1–H4 | M3 mounting hole | MountingHole 3.2 mm |
  
-C1/C2/C3 correspond to Cin/Cin2/Cout in the source guide. No adjustable-output divider is fitted. `BOM.csv` lists values and assigned footprints — it is not a fully sourced purchasing BOM.
+C1/C2/C3 correspond to Cin/Cin2/Cout in the source guide. No adjustable-output divider is fitted.
  
 ## Connections
  
@@ -50,9 +50,7 @@ J1 pin 1 is input positive; J2 pin 1 is output positive; both pin 2 terminals ar
 - `Buck_Converter.kicad_pro` — project file. Open this in KiCad, then double-click the schematic or PCB.
 - `Buck_Converter.kicad_sch` — schematic.
 - `Buck_Converter.kicad_pcb` — placed, routed board with filled ground zones.
-- `BOM.csv` — component values and assigned footprints.
 - `sym-lib-table`, `fp-lib-table` — library tables (reference standard KiCad 10 libraries).
-- `fabrication/` — Gerbers, drill files, and drill maps exported from the board above, ready to send to a fab house.
 - `ltspice/` — LTspice validation of the power stage. `Buck_Converter_LTspice.asc` is the schematic (open it and hit Run); `LM2596_5P0_TRANS.lib` is TI's official LM2596-5.0 transient model, ported from PSpice syntax; `LM2596_5P0_TRANS.asy` is the matching symbol; `Buck_Converter_LTspice.plt` restores the plot panes. All four files must stay together in the same folder.
  
 ## Validation
