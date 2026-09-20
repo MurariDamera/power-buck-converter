@@ -74,20 +74,9 @@ This is a transient-model simulation, not a hardware measurement — it doesn't 
  
 ## Operating limits
  
-**Use 12 V nominal input.** The guide's 7–40 V range is not a valid rating for this board with its 35 V input capacitor (C1) and 40 V diode. The regulator's own voltage limit does not set the assembled board's limit.
- 
-**3 A is a target, not a validated rating.** TI's LM2596 datasheet (§9.2.1.2.4) calls for a diode current rating ≥ 1.3× max load — 3.9 A at 3 A load. The 1N5822 does not meet this; it was retained to reproduce the guide. Select a higher-rated Schottky and verify its footprint before a 3 A build. U1 needs thermal design and a heatsink at high load. LTspice simulation ([Simulation](#simulation)) backs this up: regulation sags to 4.31 V at 3 A, versus 4.99 V at 1 A.
- 
-Before ordering parts or boards, select real manufacturer parts and confirm each footprint/rating:
- 
-- **U1** — LM2596T-5.0 fixed-output, staggered TO-220 lead dimensions matching the footprint.
-- **L1** — 33 µH, saturation ≥ 3.5 A with margin, adequate RMS rating, low DCR; footprint is 12.5 mm dia / 7 mm pitch. Footprint geometry does not establish current rating.
-- **C1** — 680 µF / 35 V low-ESR aluminium electrolytic, 10 mm dia / 5 mm pitch, adequate ripple rating.
-- **C3** — 220 µF / 25 V low-ESR aluminium electrolytic, 8 mm dia / 3.5 mm pitch; size ESR/ripple per TI's output-cap guidance. Do not substitute a ceramic/polymer part by capacitance alone.
-- **C2** — 100 nF / ≥ 50 V, disc, 5 mm pitch.
-- **D1** — DO-201AD, 15.24 mm formed lead pitch; band faces the footprint's K marking.
-- **J1 / J2** — 5.08 mm pitch, rated for the intended current.
-Start prototype testing with a current-limited 12 V supply: confirm unloaded 5 V output, then increase load while watching output ripple and component temperatures.
+- **12 V nominal input only** — C1 (35 V) and D1 (40 V) don't support the guide's 7–40 V range.
+- **3 A is an unvalidated target** — LTspice shows regulation sagging to 4.31 V at 3 A vs. 4.99 V at 1 A ([Simulation](#simulation)), and the 1N5822 falls short of TI's recommended 3.9 A diode rating at that load.
+- Verify real part ratings/footprints before ordering, and bring the board up on a current-limited supply, unloaded first.
  
 ## Source
  
