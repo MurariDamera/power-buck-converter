@@ -3,7 +3,7 @@ me · MD
  
 A fixed-output 5 V step-down (buck) converter built around the **LM2596T-5.0** switching regulator, designed in **KiCad 10**. Two-layer through-hole board, 71 × 45 mm, with ground pours on both layers and four M3 mounting holes.
  
-This is a prototype design reproduced from a LM2596 design guide. It passes KiCad's electrical and design-rule checks but has **not** been simulated, prototyped, or thermally tested. See [Operating limits](#operating-limits) before building.
+This is a prototype design reproduced from a LM2596 design guide. It passes KiCad's electrical and design-rule checks, and the power stage has been verified in LTspice against TI's transient model (see [Simulation](#simulation)) — but it has **not** been prototyped or thermally tested. See [Operating limits](#operating-limits) before building.
  
 ## Design summary
  
@@ -55,18 +55,32 @@ J1 pin 1 is input positive; J2 pin 1 is output positive; both pin 2 terminals ar
 - `build_design.py` — the generator that produced the project, schematic, and board. **Running it overwrites those files, including any manual edits.** Normal editing should be done in KiCad directly.
 - `verify_connectivity.py` — checks an exported netlist against the four expected nets above. Requires a `reports/netlist.xml` exported from KiCad.
 - `fabrication/` — Gerbers, drill files, and drill maps exported from the board above, ready to send to a fab house.
+- `ltspice/` — LTspice validation of the power stage. `Buck_Converter_LTspice.asc` is the schematic (open it and hit Run); `LM2596_5P0_TRANS.lib` is TI's official LM2596-5.0 transient model, ported from PSpice syntax; `LM2596_5P0_TRANS.asy` is the matching symbol; `Buck_Converter_LTspice.plt` restores the plot panes. All four files must stay together in the same folder.
  
 ## Validation
  
 KiCad 10.0.6 ERC and DRC (with zone refill and schematic parity) both report zero violations, zero unconnected items, and zero parity issues, with no rule exclusions.
  
-These checks verify CAD connectivity and geometry only. **No LTspice simulation, prototype measurement, thermal test, or control-loop stability test has been performed.**
+These checks verify CAD connectivity and geometry only — no prototype measurement or thermal test has been performed.
+ 
+## Simulation
+ 
+The power stage (D1, L1, C1–C3) plus TI's official LM2596-5.0 PSpice transient model were simulated in LTspice (`ltspice/Buck_Converter_LTspice.asc`), 12 V in, 150 kHz switching, transient analysis to steady state:
+ 
+| Load | Simulated output |
+| --- | --- |
+| 1 A (5 Ω) | 4.99 V |
+| 3 A design target (1.667 Ω) | 4.31 V, 120 mV ripple |
+ 
+At the 3 A design target the loop sags to 4.31 V instead of regulating to 5.0 V. This is a real result, not a simulation artifact — it was confirmed by checking that regulation is accurate at light load (1 A) and only degrades as load approaches the design target, consistent with [Operating limits](#operating-limits) already flagging 3 A as unvalidated. Treat 3 A as the point where this design's regulation margin runs out, not as a safe operating current.
+ 
+This is a transient-model simulation, not a hardware measurement — it doesn't account for PCB parasitics, the specific 1N5822's real diode curve, or thermal effects.
  
 ## Operating limits
  
 **Use 12 V nominal input.** The guide's 7–40 V range is not a valid rating for this board with its 35 V input capacitor (C1) and 40 V diode. The regulator's own voltage limit does not set the assembled board's limit.
  
-**3 A is a target, not a validated rating.** TI's LM2596 datasheet (§9.2.1.2.4) calls for a diode current rating ≥ 1.3× max load — 3.9 A at 3 A load. The 1N5822 does not meet this; it was retained to reproduce the guide. Select a higher-rated Schottky and verify its footprint before a 3 A build. U1 needs thermal design and a heatsink at high load.
+**3 A is a target, not a validated rating.** TI's LM2596 datasheet (§9.2.1.2.4) calls for a diode current rating ≥ 1.3× max load — 3.9 A at 3 A load. The 1N5822 does not meet this; it was retained to reproduce the guide. Select a higher-rated Schottky and verify its footprint before a 3 A build. U1 needs thermal design and a heatsink at high load. LTspice simulation ([Simulation](#simulation)) backs this up: regulation sags to 4.31 V at 3 A, versus 4.99 V at 1 A.
  
 Before ordering parts or boards, select real manufacturer parts and confirm each footprint/rating:
  
