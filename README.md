@@ -54,7 +54,7 @@ J1 pin 1 is input positive; J2 pin 1 is output positive; both pin 2 terminals ar
 - `sym-lib-table`, `fp-lib-table` — library tables (reference standard KiCad 10 libraries).
 - `build_design.py` — the generator that produced the project, schematic, and board. **Running it overwrites those files, including any manual edits.** Normal editing should be done in KiCad directly.
 - `verify_connectivity.py` — checks an exported netlist against the four expected nets above. Requires a `reports/netlist.xml` exported from KiCad.
-Fabrication outputs (Gerbers, drills) are not included — export them from KiCad when you're ready to order.
+- `fabrication/` — Gerbers, drill files, and drill maps exported from the board above, ready to send to a fab house.
  
 ## Validation
  
